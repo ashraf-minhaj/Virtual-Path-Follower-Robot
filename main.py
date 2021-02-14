@@ -16,7 +16,7 @@ $ pip install pygame
 
 # import library
 import pygame
-#import serial
+import serial
 
 # robot port and buadrate
 # change these according to your need
@@ -25,7 +25,7 @@ BUADRATE = 9600
 
 # initialize things
 pygame.init()
-#robot = serial.Serial(PORT, BUADRATE)  # connect robot
+robot = serial.Serial(PORT, BUADRATE)  # connect robot
 
 # create window with size (our image size)
 window = pygame.display.set_mode((700,400))  # track 1
@@ -50,7 +50,7 @@ direction = 'y_up'  # cars current direction
 run = 1
 
 # start the robot
-#robot.write(b'f')
+robot.write(b'f')
 
 # main loop
 while run:
@@ -102,7 +102,7 @@ while run:
         car = pygame.transform.rotate(car, -90)
         window.blit(car, (car_x, car_y))
         print('Turn Right')
-        #robot.write(b'r')
+        robot.write(b'r')
 
     # go x right
     if y_up != 255 and direction == 'x_right' and y_down != 255 and x_right == 255:
@@ -116,7 +116,7 @@ while run:
         car_x += JUMP_VALUE
         window.blit(car, (car_x, car_y))
         print('Turn Right')
-        #robot.write(b'r')
+        robot.write(b'r')
 
     # go y down
     if y_down == 255 and direction == 'y_down' and x_left != 255 and x_right != 255:
@@ -131,7 +131,7 @@ while run:
         car_y += JUMP_VALUE
         car_x += JUMP_VALUE
         print('Turn left')
-        #robot.write(b'l')
+        robot.write(b'l')
     
     # turn to y up
     if y_up == 255 and direction == 'x_right' and x_left == 255 and x_right == 255:
@@ -141,13 +141,13 @@ while run:
         car_y -= JUMP_VALUE + 5
         car_x += JUMP_VALUE
         print('Turn left')
-        #robot.write(b'l')
+        robot.write(b'l')
     
     # if car is stopped
     if car_x == last_x and car_y == last_y:
         # stop the engine sound
         print("STOPPED")
-        #robot.write(b's')
+        robot.write(b's')
         
     pygame.display.update()  # update the window
 
