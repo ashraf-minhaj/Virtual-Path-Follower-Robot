@@ -12,11 +12,13 @@
 
 """ install - 
 $ pip install pygame
+$ pip install pySerial
 """
 
 # import library
 import pygame
 import serial
+from time import sleep
 
 # robot port and buadrate
 # change these according to your need
@@ -51,10 +53,10 @@ run = 1
 
 # start the robot
 robot.write(b'f')
-
+DELAY = .400
 # main loop
 while run:
-    clock.tick(60)         # update the window/run loop by this speed
+    clock.tick(30)         # update the window/run loop by this speed
     #check for events
     for event in pygame.event.get():
         # quit button clicked
@@ -103,6 +105,8 @@ while run:
         window.blit(car, (car_x, car_y))
         print('Turn Right')
         robot.write(b'r')
+        sleep(DELAY)
+        robot.write(b'f')
 
     # go x right
     if y_up != 255 and direction == 'x_right' and y_down != 255 and x_right == 255:
@@ -117,6 +121,8 @@ while run:
         window.blit(car, (car_x, car_y))
         print('Turn Right')
         robot.write(b'r')
+        sleep(DELAY)
+        robot.write(b'f')
 
     # go y down
     if y_down == 255 and direction == 'y_down' and x_left != 255 and x_right != 255:
@@ -132,6 +138,8 @@ while run:
         car_x += JUMP_VALUE
         print('Turn left')
         robot.write(b'l')
+        sleep(DELAY)
+        robot.write(b'f')
     
     # turn to y up
     if y_up == 255 and direction == 'x_right' and x_left == 255 and x_right == 255:
@@ -142,6 +150,8 @@ while run:
         car_x += JUMP_VALUE
         print('Turn left')
         robot.write(b'l')
+        sleep(DELAY)
+        robot.write(b'f')
     
     # if car is stopped
     if car_x == last_x and car_y == last_y:
